@@ -1,0 +1,55 @@
+write("Jedi 2 Tests (paramPassing = BY_REF)")
+
+def a = 10
+{def x = 2 * a; def a = 30; x + a + { def x = 3; def a = 2; x * a}}
+
+def square = lambda(x) x * x
+def max2 = lambda(x, y) if (x < y) y else x
+def max3 = lambda(x, y, z) max2(x, max2(y, z))
+def mod = lambda(x, y) { def q = x / y; x - y * q }
+
+square(3 + 2)
+mod(5, 3)
+mod(3, 5)
+max3(square(3), 25 / 7, 3 * 5)
+
+def fib = lambda(n) if (n < 2) 1 else fib(n - 1) + fib(n - 2)
+fib(3)
+fib(4)
+fib(5)
+
+def big = 10
+def mulN = lambda(n) lambda(x) n * x
+def mul10 = mulN(10)
+def isBig = {def big = 100; lambda(x) big < x }
+mul10(3.14)
+isBig(2 * big)
+
+def foo = {def big = 20; lambda(x, y) if (x < big) x else y }
+foo(big, {write("computing y"); square(7) })
+foo(2 * big, {write("computing y"); square(7) })
+
+def table = list(cons("one", 1), cons("two", 2), cons("three", 3))
+car(car(table))
+cdr(car(cdr(table)))
+
+def map = lambda(f, vals) if (vals == nil()) nil() else cons(f(car(vals)), map(f, cdr(vals)))
+
+map(square, list(2, 3, 4, 5))
+
+write("...Jedi 3 tests...")
+
+def temp = var(100)
+temp
+[temp]
+temp := 2 * [temp]
+temp
+
+while([temp] < 1000) {temp := 1.2 * [temp]}
+temp
+
+def fib2 = lambda(n) { def fib0 = var(1); def fib1 = var(1); def count = var(0); while([count] < n ) { def temp = [fib0]; fib0 := [fib1]; fib1 := temp + [fib1]; count := [count] + 1}; [fib0]}
+
+fib2(3)
+fib2(4)
+fib2(5)
